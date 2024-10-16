@@ -74,6 +74,20 @@
     </style>
 </head>
 <body>
+    <div class="notification">
+            <?php
+            if (isset($_GET['pesan'])) {
+                if ($_GET['pesan'] == "gagal") {
+                    echo "Login gagal! Username dan password salah!";
+                } else if ($_GET['pesan'] == "logout") {
+                    echo "Anda telah berhasil logout";
+                } else if ($_GET['pesan'] == "belum_login") {
+                    echo "Anda harus login untuk mengakses halaman admin";
+                }
+            }
+            ?>
+        </div>
+    </div>
     <div class="login-container">
         <div class="image-container">
             <img src="img\logo.png" alt="Logo Amikom">
@@ -91,21 +105,6 @@
         <div class="register">
             <p>Don't have an account? <a href="form_register.php">Register here</a></p>
         </div>
-    </div>
-    <div class="notification">
-            <?php
-            if (isset($_GET['pesan'])) {
-                if ($_GET['pesan'] == "gagal") {
-                    echo "Login gagal! Username dan password salah!";
-                } else if ($_GET['pesan'] == "logout") {
-                    echo "Anda telah berhasil logout";
-                } else if ($_GET['pesan'] == "belum_login") {
-                    echo "Anda harus login untuk mengakses halaman admin";
-                }
-            }
-            ?>
-        </div>
-    </div>
-    
+    </div> 
 </body>
 </html>
