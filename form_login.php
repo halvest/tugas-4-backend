@@ -1,3 +1,16 @@
+<?php
+
+$errorMessage = @$_GET["error"];
+
+session_start();
+
+$akses = @$_SESSION["akses"];
+
+if ($akses == false)
+{
+    header("location:./dashboard.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

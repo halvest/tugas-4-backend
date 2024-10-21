@@ -4,8 +4,8 @@ include("auth/config.php");
 $username = $_POST['username'];
 $password = md5($_POST['password']);
 
-$db_shinta = "INSERT INTO user (username, password) VALUES ('$username', '$password')";
-$query = mysqli_query($connect, $db_shinta); 
+$sql = "INSERT INTO user (username, password) VALUES ('$username', '$password')";
+$query = mysqli_query($connect, $sql); 
 
 if ($query) {
     echo "Register Berhasil!.";
