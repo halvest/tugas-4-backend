@@ -5,7 +5,7 @@ session_start();
 
 $akses = @$_SESSION["akses"];
 
-if ($akses != false)
+if ($akses != false )
 {
     header("location:./form_login.php?error=Halaman Dashboard harus login!");
 }

@@ -6,7 +6,7 @@ session_start();
 
 $akses = @$_SESSION["akses"];
 
-if ($akses == false)
+if ($akses == true)
 {
     header("location:./dashboard.php");
 }
