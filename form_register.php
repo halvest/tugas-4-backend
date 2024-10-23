@@ -1,9 +1,6 @@
 <?php
-
 $errorMessage = @$_GET["error"];
-
 session_start();
-
 $akses = @$_SESSION["akses"];
 
 if ($akses == true)

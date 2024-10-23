@@ -1,8 +1,6 @@
 <?php
 require ("./auth/config.php");
-
 session_start();
-
 $akses = @$_SESSION["akses"];
 
 if ($akses != false )
@@ -18,10 +16,8 @@ if ($akses != false )
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <!-- External Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- Custom Styles -->
     <style>
         body {
             font-family: 'Poppins', sans-serif;

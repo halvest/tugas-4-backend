@@ -1,7 +1,5 @@
 <?php
-
 session_start();
-
 include ("auth/config.php");
 
 $username = $_POST['username'];

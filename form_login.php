@@ -1,9 +1,6 @@
 <?php
-
 $errorMessage = @$_GET["error"];
-
 session_start();
-
 $akses = @$_SESSION["akses"];
 
 if ($akses == true)
@@ -84,23 +81,10 @@ if ($akses == true)
             border-radius: 8px;
             margin-bottom: 20px;
         }
+
     </style>
 </head>
 <body>
-    <div class="notification">
-            <?php
-            if (isset($_GET['pesan'])) {
-                if ($_GET['pesan'] == "gagal") {
-                    echo "Login gagal! Username dan password salah!";
-                } else if ($_GET['pesan'] == "logout") {
-                    echo "Anda telah berhasil logout";
-                } else if ($_GET['pesan'] == "belum_login") {
-                    echo "Anda harus login untuk mengakses halaman admin";
-                }
-            }
-            ?>
-        </div>
-    </div>
     <div class="login-container">
         <div class="image-container">
             <img src="img\logo.png" alt="Logo Amikom">
