@@ -1,11 +1,9 @@
 <?php
 require ("./auth/config.php");
 session_start();
-$akses = @$_SESSION["akses"];
 
-if ($akses != false )
-{
-    header("location:./form_login.php?error=Halaman Dashboard harus login!");
+if($_SESSION['status']!="login"){
+header("location:./form_login.php?pesan=belum_login");
 }
 ?>
 
@@ -100,6 +98,8 @@ if ($akses != false )
                     <th>Nomor</th>
                     <th>Username</th>
                     <th>Password</th>
+                    <th>Aksi</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -110,6 +110,9 @@ if ($akses != false )
                     echo "<td>". $nomor ."</td>";
                     echo "<td>". $datauser["username"] ."</td>";
                     echo "<td>". $datauser["password"] ."</td>";
+                    echo "<td>";
+                    echo "<a href='./delete.php?username=$datauser[username]'>Hapus</a>";
+                    echo "</td>";
                     echo "</tr>";
 
                     $nomor++;

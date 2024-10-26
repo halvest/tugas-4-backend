@@ -12,7 +12,6 @@ if (!empty($username) && !empty($password)) {
     $result = mysqli_num_rows($query);
 
     if ($result > 0) {
-        $_SESSION['username'] = $username;
         $_SESSION['status'] = "login";
         header("location: ./dashboard.php");
         exit();

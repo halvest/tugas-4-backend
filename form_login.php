@@ -1,11 +1,9 @@
 <?php
 $errorMessage = @$_GET["error"];
 session_start();
-$akses = @$_SESSION["akses"];
 
-if ($akses == true)
-{
-    header("location:./dashboard.php");
+if(@$_SESSION['status']=="login"){
+header("location:./dashboard.php");
 }
 ?>
 <!DOCTYPE html>
