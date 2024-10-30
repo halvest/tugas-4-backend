@@ -1,22 +1,24 @@
 <?php
-require ("./auth/config.php");
+require("./auth/config.php");
 session_start();
 
-if($_SESSION['status']!="login"){
-header("location:./form_login.php?pesan=belum_login");
+if ($_SESSION['status'] != "login") {
+    header("location:./form_login.php?pesan=belum_login");
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
+        /* CSS sama seperti sebelumnya */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -77,6 +79,18 @@ header("location:./form_login.php?pesan=belum_login");
         .logout-btn:hover {
             background-color: #c82333;
         }
+        .tambah-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .tambah-btn:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -87,8 +101,11 @@ header("location:./form_login.php?pesan=belum_login");
     <div class="container">
         <a href="./logout.php" class="logout-btn">Logout</a>
 
+        <!-- Link Tambah Data -->
+        <a href="./add.php" class="tambah-btn">Tambah Data</a>
+
         <?php
-            $sql = "select * from user";
+            $sql = "SELECT * FROM user";
             $query = mysqli_query($connect, $sql);
         ?>
 
@@ -99,7 +116,6 @@ header("location:./form_login.php?pesan=belum_login");
                     <th>Username</th>
                     <th>Password</th>
                     <th>Aksi</th>
-                    
                 </tr>
             </thead>
             <tbody>
@@ -111,7 +127,8 @@ header("location:./form_login.php?pesan=belum_login");
                     echo "<td>". $datauser["username"] ."</td>";
                     echo "<td>". $datauser["password"] ."</td>";
                     echo "<td>";
-                    echo "<a href='./delete.php?username=$datauser[username]'>Hapus</a>";
+                    echo "<a href='./update.php?username=" . $datauser['username'] . "'>Edit</a> | ";
+                    echo "<a href='./delete.php?username=" . $datauser['username'] . "' onclick=\"return confirm('Apakah Anda yakin ingin menghapus?')\">Hapus</a>";
                     echo "</td>";
                     echo "</tr>";
 
@@ -123,3 +140,5 @@ header("location:./form_login.php?pesan=belum_login");
     </div>
 </body>
 </html>
+
+<?php include("view_footer.php"); ?>

@@ -103,3 +103,5 @@ header("location:./dashboard.php");
     </div> 
 </body>
 </html>
+
+<?php include("view_footer.php"); ?>

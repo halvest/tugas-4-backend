@@ -1,7 +1,7 @@
 <?php
 $errorMessage = @$_GET["error"];
 session_start();
-if($_SESSION['status']=="login"){
+if(@$_SESSION['status']=="login"){
     header("location:./dashboard.php");
     }
 ?>
@@ -104,3 +104,5 @@ if($_SESSION['status']=="login"){
         </div>
     </body>
     </html>
+
+    <?php include("view_footer.php"); ?>

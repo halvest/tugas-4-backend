@@ -81,7 +81,9 @@ if ($query) {
         <div class="message <?php echo $type; ?>">
             <?php echo $message; ?>
         </div>
-        <a href="form_register.php" class="back-btn">Kembali ke Halaman Register</a>
+        <a href="form_login.php" class="back-btn">Kembali ke Halaman Login</a>
     </div>
 </body>
 </html>
+
+<?php include("view_footer.php"); ?>
