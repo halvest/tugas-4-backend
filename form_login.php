@@ -1,9 +1,20 @@
 <?php
-$errorMessage = @$_GET["error"];
+include ("./auth/config.php");
 session_start();
 
-if(@$_SESSION['status']=="login"){
-header("location:./dashboard.php");
+// Menampilkan pesan error jika ada
+$errorMessage = isset($_GET["error"]) ? $_GET["error"] : "";
+
+// Mengecek apakah pengguna sudah login, jika ya, langsung arahkan ke dashboard sesuai level
+if (isset($_SESSION['status']) && $_SESSION['status'] == "login") {
+    if ($_SESSION['level'] == "Admin") {
+        header("location: ./dashboard_admin.php");
+    } elseif ($_SESSION['level'] == "Mahasiswa") {
+        header("location: ./dashboard_mahasiswa.php");
+    } elseif ($_SESSION['level'] == "Dosen") {
+        header("location: ./dashboard_dosen.php");
+    }
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -79,21 +90,31 @@ header("location:./dashboard.php");
             border-radius: 8px;
             margin-bottom: 20px;
         }
-
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="image-container">
-            <img src="img\logo.png" alt="Logo Amikom">
+            <img src="img/logo.png" alt="Logo Amikom">
         </div>
         <h2>Sign into your account</h2>
-        <form action="login.php" method="POST">
+        
+        <!-- Menampilkan pesan error jika ada -->
+        <?php if (!empty($errorMessage)): ?>
+            <p class="error-message"><?php echo htmlspecialchars($errorMessage); ?></p>
+        <?php endif; ?>
+        
+        <form action="login_action.php" method="POST">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="">
+            <input type="text" id="username" name="username" required>
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" value="">
+            <input type="password" id="password" name="password" required>
 
             <input type="submit" value="Login">
         </form>
@@ -103,5 +124,4 @@ header("location:./dashboard.php");
     </div> 
 </body>
 </html>
-
 <?php include("view_footer.php"); ?>

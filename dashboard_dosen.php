@@ -1,24 +1,29 @@
 <?php
-require("./auth/config.php");
 session_start();
+require("./auth/config.php");
 
-if ($_SESSION['status'] != "login") {
-    header("location:./form_login.php?pesan=belum_login");
+// Memastikan hanya dosen yang bisa mengakses halaman ini
+if (!isset($_SESSION['status']) || $_SESSION['status'] != "login" || $_SESSION['level'] != "Dosen") {
+    header("location: form_login.php?error=unauthorized");
+    exit();
 }
 
+// Menampilkan daftar mahasiswa dengan nilai jika ada
+$sql = "SELECT mahasiswa.nim, mahasiswa.nama, grades.grade AS nilai 
+        FROM mahasiswa 
+        LEFT JOIN grades ON mahasiswa.nim = grades.nim";
+$query = mysqli_query($connect, $sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard Dosen</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
+
     <style>
-        /* CSS sama seperti sebelumnya */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -67,14 +72,16 @@ if ($_SESSION['status'] != "login") {
         table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-        .logout-btn {
-            background-color: #dc3545;
-            color: white;
+        .logout-btn, .tambah-btn {
             padding: 10px 15px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 20px;
+            margin: 20px 0;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
         }
         .logout-btn:hover {
             background-color: #c82333;
@@ -82,11 +89,6 @@ if ($_SESSION['status'] != "login") {
         .tambah-btn {
             background-color: #28a745;
             color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 20px;
         }
         .tambah-btn:hover {
             background-color: #218838;
@@ -95,44 +97,32 @@ if ($_SESSION['status'] != "login") {
 </head>
 <body>
     <header>
-        <h2>Dashboard User</h2>
+        <h2>Dashboard Dosen - Data Mahasiswa dan Nilai</h2>
     </header>
 
     <div class="container">
         <a href="./logout.php" class="logout-btn">Logout</a>
-
-        <!-- Link Tambah Data -->
-        <a href="./add.php" class="tambah-btn">Tambah Data</a>
-
-        <?php
-            $sql = "SELECT * FROM user";
-            $query = mysqli_query($connect, $sql);
-        ?>
+        <a href="./add_grade.php" class="tambah-btn">Tambah Nilai</a>
 
         <table>
             <thead>
                 <tr>
                     <th>Nomor</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Aksi</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>NIM</th>
+                    <th>Nilai</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $nomor = 1;
-                while ($datauser = mysqli_fetch_array($query)) {
+                while ($data = mysqli_fetch_assoc($query)) {
                     echo "<tr>";
-                    echo "<td>". $nomor ."</td>";
-                    echo "<td>". $datauser["username"] ."</td>";
-                    echo "<td>". $datauser["password"] ."</td>";
-                    echo "<td>";
-                    echo "<a href='./update.php?username=" . $datauser['username'] . "'>Edit</a> | ";
-                    echo "<a href='./delete.php?username=" . $datauser['username'] . "' onclick=\"return confirm('Apakah Anda yakin ingin menghapus?')\">Hapus</a>";
-                    echo "</td>";
+                    echo "<td>" . $nomor++ . "</td>";
+                    echo "<td>" . htmlspecialchars($data['nama']) . "</td>"; // Sanitasi output nama
+                    echo "<td>" . htmlspecialchars($data['nim']) . "</td>"; // Sanitasi output NIM
+                    echo "<td>" . (isset($data['nilai']) ? htmlspecialchars($data['nilai']) : '-') . "</td>"; // Sanitasi output nilai jika ada
                     echo "</tr>";
-
-                    $nomor++;
                 }
                 ?>
             </tbody>
